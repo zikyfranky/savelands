@@ -3,11 +3,11 @@ import { Pair, Token, Bundle } from '../types/schema'
 import { BigDecimal, Address, BigInt } from '@graphprotocol/graph-ts/index'
 import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD, UNTRACKED_PAIRS } from './helpers'
 
-let WBNB_ADDRESS = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
-let BUSD_WBNB_PAIR = '0x15443197c97009737e8e9fe3eac321affcba65c1' // created block 9820708
-let USDT_WBNB_PAIR = '0x6a38723e0acb329c887ed9f180d0e3913aef4ddc' // created block 9820708
+let WETH_ADDRESS = '0xc778417e063141139fce010982780140aa0cd5ab'
+let BUSD_WBNB_PAIR = ''
+let USDT_WBNB_PAIR = ''
 
-export function getBnbPriceInUSD(): BigDecimal {
+export function getEthPriceInUSD(): BigDecimal {
   // fetch eth prices for each stablecoin
   let usdtPair = Pair.load(USDT_WBNB_PAIR) // usdt is token0
   let busdPair = Pair.load(BUSD_WBNB_PAIR) // busd is token1
@@ -32,21 +32,9 @@ export function getBnbPriceInUSD(): BigDecimal {
 
 // token where amounts should contribute to tracked volume and liquidity
 let WHITELIST: string[] = [
-  WBNB_ADDRESS,
-  '0xe9e7cea3dedca5984780bafc599bd69add087d56', // BUSD
-  '0x55d398326f99059ff775485246999027b3197955', // USDT
-  '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d', // USDC
-  '0x23396cf899ca06c4472205fc903bdb4de249d6fc', // UST
-  '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c', // BTCB
-  '0x2170ed0880ac9a755fd29b2688956bd959f933f8', // ETH
-  '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82', // CAKE
-  '0xE02dF9e3e622DeBdD69fb838bB799E3F168902c5', // BAKE
-  '0x190b589cf9Fb8DDEabBFeae36a813FFb2A702454', // BDO
-  '0x7083609fCE4d1d8Dc0C979AAb8c869Ea2C873402', // DOT
-  '0x4fa7163e153419e0e1064e418dd7a99314ed27b6', // HOT CROSS
-  '0xc9849e6fdb743d08faee3e34dd2d1bc69ea11a51', //PANCAKE BUNNY
-  '0x4b0f1812e5df2a09796481ff14017e6005508003', // TWT
-  '0xd46df541148932690b81092f600f35208afd4325' //Prism Token
+  WETH_ADDRESS,
+  '0xad3b7ffd749678fd025704588ab2eb9dfe74b025', // BBDoge
+  '0xbb1a486da878838a24186cb05066beccbd60664b' // PAIR
 ]
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
@@ -60,7 +48,7 @@ let MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('0.0001')
  * @todo update to be derived ETH (add stablecoin estimates)
  **/
 export function findEthPerToken(token: Token): BigDecimal {
-  if (token.id == WBNB_ADDRESS) {
+  if (token.id == WETH_ADDRESS) {
     return ONE_BD
   }
   // loop through whitelist and check if paired with any
