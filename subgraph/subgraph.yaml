@@ -1,5 +1,5 @@
 specVersion: 0.0.2
-description: EmpireDex on Binance Smart Chain - Prism Network.
+description: Dex on Rinkeby - RinkBaby Network.
 repository: https://github.com/zikyfranky/savelands
 schema:
   file: ./schema.graphql
