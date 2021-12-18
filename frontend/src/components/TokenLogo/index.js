@@ -71,7 +71,7 @@ export default function TokenLogo({ address, header = false, size = '24px', ...r
     )
   }
 
-  const path = `https://raw.githubusercontent.com/Prism-Network-io/default-token-list/master/logos/bsc/${isAddress(
+  const path = `https://raw.githubusercontent.com/${isAddress(
     address
   )}/logo.png`
 
