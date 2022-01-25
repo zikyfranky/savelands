@@ -238,14 +238,14 @@ export function handleSync(event: Sync): void {
   bundle.ethPrice = getEthPriceInUSD()
   bundle.save()
 
-  let t0DerivedBNB = findEthPerToken(token0 as Token)
-  let t1DerivedBNB = findEthPerToken(token1 as Token)
+  let t0DerivedETH = findEthPerToken(token0 as Token)
+  let t1DerivedETH = findEthPerToken(token1 as Token)
 
-  token0.derivedETH = t0DerivedBNB
-  token0.derivedUSD = t0DerivedBNB.times(bundle.ethPrice);
+  token0.derivedETH = t0DerivedETH
+  token0.derivedUSD = t0DerivedETH.times(bundle.ethPrice);
   
-  token1.derivedETH = t1DerivedBNB
-  token1.derivedUSD = t1DerivedBNB.times(bundle.ethPrice);
+  token1.derivedETH = t1DerivedETH
+  token1.derivedUSD = t1DerivedETH.times(bundle.ethPrice);
   token0.save()
   token1.save()
 
