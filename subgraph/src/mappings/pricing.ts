@@ -5,7 +5,7 @@ import { ZERO_BD, factoryContract, ADDRESS_ZERO, ONE_BD, UNTRACKED_PAIRS } from 
 
 let WETH_ADDRESS = '0xc778417e063141139fce010982780140aa0cd5ab'
 let BUSD_WBNB_PAIR = ''
-let USDT_WBNB_PAIR = ''
+let USDT_WBNB_PAIR = '0x62ecc65a29d8e98eb73ae9e68362a196d72d3c78'
 
 export function getEthPriceInUSD(): BigDecimal {
   // fetch eth prices for each stablecoin
@@ -34,7 +34,8 @@ export function getEthPriceInUSD(): BigDecimal {
 let WHITELIST: string[] = [
   WETH_ADDRESS,
   '0xad3b7ffd749678fd025704588ab2eb9dfe74b025', // BBDoge
-  '0xbb1a486da878838a24186cb05066beccbd60664b' // PAIR
+  '0xbb1a486da878838a24186cb05066beccbd60664b', // PAIR
+  '0x4190c27c791084d5668ee425b72d80a993d222bf' // USDT 
 ]
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
