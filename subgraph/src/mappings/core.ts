@@ -48,6 +48,9 @@ export function handleTransfer(event: Transfer): void {
   let pair = Pair.load(event.address.toHexString())
   let pairContract = PairContract.bind(event.address)
 
+  let token0 = Token.load(pair.token0)
+  let token1 = Token.load(pair.token1)
+
   // liquidity token amount being transfered
   let value = convertTokenToDecimal(event.params.value, BI_18)
 
@@ -83,6 +86,8 @@ export function handleTransfer(event: Transfer): void {
       mint.liquidity = value
       mint.timestamp = transaction.timestamp
       mint.transaction = transaction.id
+      mint.token0 = token0.id
+      mint.token1 = token1.id
       mint.save()
 
       // update mints in transaction
@@ -111,6 +116,10 @@ export function handleTransfer(event: Transfer): void {
     burn.sender = event.params.from
     burn.needsComplete = true
     burn.transaction = transaction.id
+    
+    //tokens of pair burnt 
+    burn.token0 = token0.id
+    burn.token1 = token1.id
     burn.save()
 
     // TODO: Consider using .concat() for handling array updates to protect
@@ -145,6 +154,10 @@ export function handleTransfer(event: Transfer): void {
         burn.liquidity = value
         burn.transaction = transaction.id
         burn.timestamp = transaction.timestamp
+        
+        //tokens of pair burnt 
+        burn.token0 = token0.id
+        burn.token1 = token1.id
       }
     } else {
       burn = new BurnEvent(
@@ -159,6 +172,10 @@ export function handleTransfer(event: Transfer): void {
       burn.liquidity = value
       burn.transaction = transaction.id
       burn.timestamp = transaction.timestamp
+      
+        //tokens of pair burnt 
+        burn.token0 = token0.id
+        burn.token1 = token1.id
     }
 
     // if this logical burn included a fee mint, account for this
@@ -322,6 +339,9 @@ export function handleMint(event: Mint): void {
   mint.amount1 = token1Amount as BigDecimal
   mint.logIndex = event.logIndex
   mint.amountUSD = amountTotalUSD as BigDecimal
+  // tokens of LP
+  mint.token0 = token0.id
+  mint.token1 = token1.id
   mint.save()
 
   // update the LP position
@@ -384,6 +404,10 @@ export function handleBurn(event: Burn): void {
   // burn.to = event.params.to
   burn.logIndex = event.logIndex
   burn.amountUSD = amountTotalUSD as BigDecimal
+  
+  //tokens of pair burnt 
+  burn.token0 = token0.id
+  burn.token1 = token1.id
   burn.save()
 
   // update the LP position
@@ -498,6 +522,9 @@ export function handleSwap(event: Swap): void {
   swap.logIndex = event.logIndex
   // use the tracked amount if we have it
   swap.amountUSD = trackedAmountUSD === ZERO_BD ? derivedAmountUSD : trackedAmountUSD
+  // tokens of lp 
+  swap.token0 = token0.id
+  swap.token1 = token1.id
   swap.save()
 
   // update the transaction

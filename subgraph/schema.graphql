@@ -157,6 +157,11 @@ type Mint @entity {
   amount0: BigDecimal
   amount1: BigDecimal
   logIndex: BigInt
+
+  #tokens of pair
+  token0: Token!
+  token1: Token!
+
   # derived amount based on available prices of tokens
   amountUSD: BigDecimal
 
@@ -184,6 +189,10 @@ type Burn @entity {
   # derived amount based on available prices of tokens
   amountUSD: BigDecimal
 
+  #tokens of pair
+  token0: Token!
+  token1: Token!
+
   # mark uncomplete in ETH case
   needsComplete: Boolean!
 
@@ -208,6 +217,10 @@ type Swap @entity {
   amount1Out: BigDecimal!
   to: Bytes!
   logIndex: BigInt
+
+  #tokens of pair
+  token0: Token!
+  token1: Token!
 
   # derived info
   amountUSD: BigDecimal!
